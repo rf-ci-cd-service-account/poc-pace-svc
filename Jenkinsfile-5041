@@ -1,0 +1,15 @@
+library identifier: 'jenkins-shared-library@main', retriever: modernSCM(
+  [$class: 'GitSCMSource',
+   remote: 'https://github.com/Round-Feather/pace-jenkins-shared-library.git',
+   credentialsId: 'scm-cred-id'])
+
+ciMaven{
+    gitCredentialsId = 'scm-cred-id'
+    microserviceName = "poc-pace-svc"
+    techName = "java"
+    javaBuildCommand = "mvn clean install -DskipTests"
+    javaUnitTestCommand = "mvn test" 
+    sonarQualityProfile = "sonarway_and_findbugs_java"
+    sonarQualityGate = "sonar_quality_pace"
+    sonarCommand = "mvn sonar:sonar -Dsonar.projectKey=poc-pace-svc -Dsonar.projectName=poc-pace-svc -Dsonar.java.binaries=target -Dsonar.sources=src/main/java/ -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml"
+}
